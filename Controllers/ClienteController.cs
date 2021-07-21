@@ -73,6 +73,9 @@ namespace WSVentas_3.Controllers
                     oCliente.Nombre = oModel.Nombre; //nombre será lo que recibo de mi ClienteRequest, oModel
                     db.Entry(oCliente).State = Microsoft.EntityFrameworkCore.EntityState.Modified; //indica al Entityframework que este registro pasa a modificado y cuando hace el savechange se edita 
                     db.SaveChanges(); //fija lo hecho
+                    var lst = db.Clientes.OrderByDescending(d => d.CreatedAt).ToList();
+                    var updated = lst.Find(x => x.Id == oModel.Id);
+                    oRespuesta.Data = updated;
                     oRespuesta.Exito = 1;
                 }
 
